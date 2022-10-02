@@ -1,0 +1,26 @@
+body{
+    background-size: cover;
+    background-position: center;
+}
+.heading{
+    font-size: 25px;
+}
+
+.anchor{
+    background-color: white;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 15px;
+    padding-left: 100px;
+    padding-right: 100px;
+    color: black;
+    font-weight: 500;
+}
+#desk{
+    padding-left: 120px;
+    padding-right: 120px;
+}
+#bottles{
+    padding-left: 110px;
+    padding-right: 114px;
+}

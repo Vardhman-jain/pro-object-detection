@@ -1,0 +1,117 @@
+<html>
+<head>
+    <title>Fruit Basket Identification</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
+
+  <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+  
+  <link rel="stylesheet" type="text/css" href="fruit.css">
+  <script src=" https://unpkg.com/ml5@latest/dist/ml5.min.js "> </script>
+  <script src=" https://unpkg.com/ml5@latest/dist/ml5.min.js "></script>
+</head>
+<body background="backgroung.jpg">
+
+    <center>
+      <span>
+        <h1 class="btn btn-primary heading"> Object Detection 🔍</h1>
+        <a class="btn btn-primary back" id="back" href="index.html">Back</a>
+      </span>
+      <p></p>
+      <h3 class="btn btn-danger" id="status"></h3>
+      <p></p>
+      <h3 class="btn btn-success" id="items"></h3>
+      <br>
+      <br>
+      </center>
+      <script>
+        img = "";
+        objects = [];
+        status = "";
+        
+        function preload(){
+          img = loadImage('desk.jpg');
+        }
+        
+        
+        function setup() {
+            canvas=createCanvas(640, 420);
+            canvas.center();
+            objectDetector=ml5.objectDetector('cocossd', modelLoaded);
+            document.getElementById('status').innerHTML= "Status: Detecting Objects";
+        
+        }
+        function modelLoaded() {
+            console.log("Model Loaded!")
+            status= true;
+            objectDetector.detect(img, gotResults)
+        }
+        function gotResults(error, results) {
+            if(error){
+                console.log(error);
+            }
+            console.log(results);
+            obeject= results;
+            
+        }
+        function draw() {
+            if(status =! ""){
+                image(img,0,0, 650, 450)
+        
+                for ( i = 0; i < object.length; i++) {
+                    noStroke()
+                    fill(0,255,0);
+                    percent= floor(object[i].confidence * 100); //floor() will take the no. before the decimal;
+                    text(object[i].label + " " + percent+ "%", object[i].x + 15, object[i].y + 15);
+                    noFill();
+                    stroke(0,255,0);
+                    rect(object[i].x, object[i].y, object[i].width, object[i].height);
+                }
+            }
+        
+        }
+        
+        
+        function setup() {
+          canvas = createCanvas(640, 420);
+          canvas.center();
+          objectDetector = ml5.objectDetector('cocossd', modelLoaded);
+          document.getElementById("status").innerHTML = "Status : Detecting Objects";
+        }
+        
+        function modelLoaded() {
+          console.log("Model Loaded!")
+          status = true;
+          objectDetector.detect(img, gotResult);
+        }
+        
+        function gotResult(error, results) {
+          if (error) {
+            console.log(error);
+          }
+          console.log(results);
+          objects = results;
+        }
+        
+        
+        function draw() {
+          if (status != undefined) {
+              image(img, 0, 0, 640, 420);
+            for (var i = 0; i < objects.length; i++) {
+              document.getElementById("status").innerHTML = "Status : Objects Detected";
+              noStroke();
+              fill(0, 255, 0);
+              percent = floor(objects[i].confidence * 100);
+              text(objects[i].label + " " + percent + "%", objects[i].x + 5, objects[i].y + 15);
+              noFill();
+              stroke(0, 255, 0);
+              rect(objects[i].x, objects[i].y, objects[i].width, objects[i].height);
+            }
+          }
+        }
+            </script>
+        </body>
+</html>
